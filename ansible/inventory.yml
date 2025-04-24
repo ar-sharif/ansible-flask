@@ -1,0 +1,24 @@
+all:
+  children:
+    application:
+      hosts:
+        instance_1:
+          ansible_host: 127.0.0.1
+          ansible_port: 2121
+          ansible_become_pass: ansible123
+        instance_2:
+          ansible_host: 127.0.0.1
+          ansible_port: 2122
+          ansible_become_pass: ansible123
+        instance_3:
+          ansible_host: 127.0.0.1
+          ansible_port: 2123
+          ansible_become_pass: ansible123
+        instance_4:
+          ansible_host: 127.0.0.1
+          ansible_port: 2124
+          ansible_become_pass: ansible123
+        instance_5:
+          ansible_host: 127.0.0.1
+          ansible_port: 2125
+          ansible_become_pass: ansible123

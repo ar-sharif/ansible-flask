@@ -1,0 +1,31 @@
+- name: Clone and run application
+  hosts: application
+  become: true
+  become_user: root
+  vars:
+    github_url: git@github.com:ar-sharif/sample-flask.git
+    project_dir: /opt/project
+  tasks:
+    - name: Install git
+      ansible.builtin.apt:
+        name: git
+        state: present
+        update_cache: true
+    - name: Clone the project
+      ansible.builtin.git:
+        repo: "{{ github_url }}"
+        dest: "{{ project_dir }}"
+        version: master
+        force: true
+    - name: Create environment
+      ansible.builtin.command:
+        cmd: /usr/bin/python3 -m venv {{ project_dir }}
+        chdir: "{{ project_dir }}"
+      register: venv_result
+      changed_when: venv_result.rc == 0
+    - name: Install requirements
+      ansible.builtin.pip:
+        requirements: "{{ project_dir }}/requirements.txt"
+        virtualenv: "{{ project_dir }}"
+        virtualenv_command: /usr/bin/python3
+      changed_when: pip_result.rc == 0
